@@ -119,11 +119,9 @@ async def list_models(request: Request,
 
     # 1. 在这个列表里，写入您所有想要显示的模型名称
     my_custom_models = [
-        "gpt-4o",
-        "gpt-4-turbo",
-        "gemini-1.5-pro-latest",
-        "claude-3-opus-20240229",
-        "my-fine-tuned-model-v1"
+        "gemini-2.0-pro",
+        "gemini-2.5-flash",
+        "gemini-2.5-pro"
     ]
 
     # 2. 这部分代码负责将您的列表格式化成API需要的标准格式
