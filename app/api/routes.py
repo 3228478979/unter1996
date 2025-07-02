@@ -114,9 +114,32 @@ async def vertex_list_models(request: Request,
 async def list_models(request: Request,
                       _ = Depends(custom_verify_password),
                       _2 = Depends(verify_user_agent)):
-    if settings.ENABLE_VERTEX:
-        return await vertex_list_models(request, _, _2)
-    return await aistudio_list_models(_, _2)
+    
+    # --- 从这里开始是您的新代码 ---
+
+    # 1. 在这个列表里，写入您所有想要显示的模型名称
+    my_custom_models = [
+        "gpt-4o",
+        "gpt-4-turbo",
+        "gemini-1.5-pro-latest",
+        "claude-3-opus-20240229",
+        "my-fine-tuned-model-v1"
+    ]
+
+    # 2. 这部分代码负责将您的列表格式化成API需要的标准格式
+    models_data = []
+    for model_id in my_custom_models:
+        models_data.append({
+            "id": model_id,
+            "object": "model",
+            "created": 1677610600,      # 这个时间戳可以不用改
+            "owned_by": "organization"  # 所有者可以随便写，比如 "user"
+        })
+    
+    # 3. 直接返回您的自定义列表
+    return {"object": "list", "data": models_data}
+
+    # --- 您的新代码到这里结束 ---
 
 @router.post("/aistudio/chat/completions", response_model=ChatCompletionResponse)
 async def aistudio_chat_completions(
